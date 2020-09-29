@@ -4,16 +4,6 @@
 //2. JS Variables
 //3. Function Calls
 
-// Start Button is Clicked
-// Timer Begins and first question appears
-// When a user answers a question, correct or wrong appears on screen
-// The next question appears
-// If a question is answered incorrectly, then time is subtracted
-// WHEN all questions are answered or the timer reaches 0, then the game is over
-//I can save my initials and score
-//High scores appear at the end of the game
-
-// create array of questions
 // list of all questions, choices, and answers
 var questions = [
   {
@@ -50,18 +40,35 @@ var questions = [
   },
 ];
 
-//define all your global vars
+//answer choices
+
+//define global vars
 var startBtnEl = document.getElementById("startBtn");
 var quizStartEl = document.getElementById("quiz-start");
 var questionsEl = document.getElementById("questions");
+var timerEl = document.getElementById("time");
 
-//start quiz fn **
+//start quiz fn
 function startQuiz() {
   quizStartEl.setAttribute("class", "hide");
   questionsEl.removeAttribute("class");
 }
 
 //start timer fn
+var secondsLeft = 75;
+
+function setTime() {
+  var timerInterval = setInterval(function () {
+    secondsLeft--;
+    timerEl.textContent = secondsLeft;
+
+    if (secondsLeft === 0) {
+      clearInterval(timerInterval);
+      sendMessage();
+    }
+  }, 1000);
+}
+setTime();
 
 // end Quiz fn
 
