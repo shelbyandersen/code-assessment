@@ -47,28 +47,31 @@ var startBtnEl = document.getElementById("startBtn");
 var quizStartEl = document.getElementById("quiz-start");
 var questionsEl = document.getElementById("questions");
 var timerEl = document.getElementById("time");
+var scores = [];
+var secondsLeft = 75;
 
 //start quiz fn
 function startQuiz() {
   quizStartEl.setAttribute("class", "hide");
   questionsEl.removeAttribute("class");
+  setTime();
 }
 
 //start timer fn
-var secondsLeft = 75;
-
 function setTime() {
+  timerEl.addEventListener("click", function () {
+    setTime();
+  });
   var timerInterval = setInterval(function () {
     secondsLeft--;
     timerEl.textContent = secondsLeft;
 
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
-      sendMessage();
     }
   }, 1000);
+  console.log("Timer: ", setTime);
 }
-setTime();
 
 // end Quiz fn
 
