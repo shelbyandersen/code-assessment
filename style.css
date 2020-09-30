@@ -90,3 +90,8 @@ li:nth-child(odd) {
   top: 10px;
   right: 10px;
 }
+
+#highscore-display {
+  text-align: center;
+  margin-top: 10%;
+}

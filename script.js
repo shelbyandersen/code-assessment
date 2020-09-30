@@ -1,5 +1,3 @@
-//console.log("Hello World");
-
 //1. DOM Element Variables
 //2. JS Variables
 //3. Function Calls
@@ -50,6 +48,9 @@ var timerEl = document.getElementById("time");
 var choicesEl = document.getElementById("choices");
 var feedbackEl = document.getElementById("feedback");
 var endScreenEl = document.getElementById("end-screen");
+var highScores = document.getElementById("scores");
+var storeInitials = document.getElementById("initials");
+var submitBtn = document.getElementById("submit");
 
 var secondsLeft = 75;
 var questionIndex = 0;
@@ -76,7 +77,6 @@ function setTime() {
       clearTimeout(timerInterval);
     }
   }, 1000);
-  //console.log("Timer: ", setTime);
 }
 
 // end Quiz fn
@@ -86,7 +86,6 @@ function getQuestion() {
   var currentQuestion = questions[questionIndex];
   var titleEl = document.getElementById("title");
   titleEl.textContent = currentQuestion.title;
-  console.log("Question: ", currentQuestion);
   choicesEl.innerHTML = "";
   //Answer choices
   currentQuestion.choices.forEach((choice, i) => {
@@ -124,20 +123,52 @@ function validateAnswer() {
 
   questionIndex++;
   if (questionIndex === questions.length) {
-    quit();
+    endQuiz();
   } else {
     getQuestion();
   }
 }
 
-//Save score
-function quit() {
+//End game
+function endQuiz() {
   var titleEl = document.getElementById("title");
   titleEl.textContent = "All Done!";
   choicesEl.textContent = "Your final score is " + secondsLeft;
   var endScreenEl = document.getElementById("end-screen");
   endScreenEl.classList.remove("hide");
 }
+
+//Save score
+function saveHighscore() {
+  var initials = storeInitials.value.trim();
+  if (initials !== "") {
+    //Get scores from local storage
+    var highscores =
+      JSON.parse(window.localStorage.getItem("highscores")) || [];
+
+    //Users score
+    var newScore = {
+      score: secondsLeft,
+      initials: initials,
+    };
+
+    //Save score to local storage
+    highscores.push(newScore);
+    window.localStorage.setItem("highscores", JSON.stringify(highscores));
+
+    //Go to high scores page
+    window.location.href = "highscores.html";
+  }
+}
+// Save score fn
+function checkForEnter(event) {
+  if (event.key === "Enter") {
+    saveHighscore();
+  }
+}
+
+//Submit score
+submitBtn.onclick = saveHighscore;
 
 //Start quiz
 startBtnEl.onclick = startQuiz;
