@@ -49,6 +49,8 @@ var questionsEl = document.getElementById("questions");
 var timerEl = document.getElementById("time");
 var choicesEl = document.getElementById("choices");
 var feedbackEl = document.getElementById("feedback");
+var endScreenEl = document.getElementById("end-screen");
+
 var secondsLeft = 75;
 var questionIndex = 0;
 var score;
@@ -71,7 +73,7 @@ function setTime() {
     timerEl.textContent = secondsLeft;
 
     if (secondsLeft === 0) {
-      clearInterval(timerInterval);
+      clearTimeout(timerInterval);
     }
   }, 1000);
   //console.log("Timer: ", setTime);
@@ -130,10 +132,11 @@ function validateAnswer() {
 
 //Save score
 function quit() {
-  score = 0;
   var titleEl = document.getElementById("title");
   titleEl.textContent = "All Done!";
   choicesEl.textContent = "Your final score is " + secondsLeft;
+  var endScreenEl = document.getElementById("end-screen");
+  endScreenEl.classList.remove("hide");
 }
 
 //Start quiz
