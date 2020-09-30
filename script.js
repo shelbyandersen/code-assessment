@@ -51,6 +51,7 @@ var choicesEl = document.getElementById("choices");
 var feedbackEl = document.getElementById("feedback");
 var secondsLeft = 75;
 var questionIndex = 0;
+var score;
 
 //start quiz fn
 function startQuiz() {
@@ -85,7 +86,7 @@ function getQuestion() {
   titleEl.textContent = currentQuestion.title;
   console.log("Question: ", currentQuestion);
   choicesEl.innerHTML = "";
-  //answer choices
+  //Answer choices
   currentQuestion.choices.forEach((choice, i) => {
     var button = document.createElement("button");
     button.setAttribute("class", "choices");
@@ -102,14 +103,14 @@ function validateAnswer() {
   var currentQuestion = questions[questionIndex];
   if (this.value !== currentQuestion.answer) {
     feedbackEl.textContent = "Wrong";
-    // penalize time
+    //Penalize time for wrong answer
     secondsLeft -= 15;
 
     if (secondsLeft < 0) {
       secondsLeft = 0;
     }
 
-    // display new time on page
+    //Display new time
     timerEl.textContent = secondsLeft;
   } else {
     feedbackEl.textContent = "Right";
@@ -127,6 +128,13 @@ function validateAnswer() {
   }
 }
 
-// save score
-function quit() {}
+//Save score
+function quit() {
+  score = 0;
+  var titleEl = document.getElementById("title");
+  titleEl.textContent = "All Done!";
+  choicesEl.textContent = "Your final score is " + secondsLeft;
+}
+
+//Start quiz
 startBtnEl.onclick = startQuiz;
