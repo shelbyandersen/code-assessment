@@ -47,14 +47,17 @@ var startBtnEl = document.getElementById("startBtn");
 var quizStartEl = document.getElementById("quiz-start");
 var questionsEl = document.getElementById("questions");
 var timerEl = document.getElementById("time");
-var scores = [];
+var choicesEl = document.getElementById("choices");
+var feedbackEl = document.getElementById("feedback");
 var secondsLeft = 75;
+var questionIndex = 0;
 
 //start quiz fn
 function startQuiz() {
   quizStartEl.setAttribute("class", "hide");
   questionsEl.removeAttribute("class");
   setTime();
+  getQuestion();
 }
 
 //start timer fn
@@ -70,15 +73,60 @@ function setTime() {
       clearInterval(timerInterval);
     }
   }, 1000);
-  console.log("Timer: ", setTime);
+  //console.log("Timer: ", setTime);
 }
 
 // end Quiz fn
 
 //getQuestion fn
+function getQuestion() {
+  var currentQuestion = questions[questionIndex];
+  var titleEl = document.getElementById("title");
+  titleEl.textContent = currentQuestion.title;
+  console.log("Question: ", currentQuestion);
+  choicesEl.innerHTML = "";
+  //answer choices
+  currentQuestion.choices.forEach((choice, i) => {
+    var button = document.createElement("button");
+    button.setAttribute("class", "choices");
+    button.setAttribute("value", choice);
+    button.textContent = i + 1 + ". " + choice;
+    button.onclick = validateAnswer;
+    choicesEl.appendChild(button);
+  });
+}
 
 //validate answer
+function validateAnswer() {
+  feedbackEl.setAttribute("class", "feedback");
+  var currentQuestion = questions[questionIndex];
+  if (this.value !== currentQuestion.answer) {
+    feedbackEl.textContent = "Wrong";
+    // penalize time
+    secondsLeft -= 15;
+
+    if (secondsLeft < 0) {
+      secondsLeft = 0;
+    }
+
+    // display new time on page
+    timerEl.textContent = secondsLeft;
+  } else {
+    feedbackEl.textContent = "Right";
+  }
+
+  setTimeout(function () {
+    feedbackEl.setAttribute("class", "feedback hide");
+  }, 1000);
+
+  questionIndex++;
+  if (questionIndex === questions.length) {
+    quit();
+  } else {
+    getQuestion();
+  }
+}
 
 // save score
-
+function quit() {}
 startBtnEl.onclick = startQuiz;

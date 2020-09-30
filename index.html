@@ -26,10 +26,9 @@
       <section id="quiz-start" class="start">
         <h1>Title of Quiz</h1>
         <h3>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem et
-          sed sint, animi at ratione enim inventore repudiandae perspiciatis hic
-          blanditiis tempora doloribus amet natus nostrum quia, molestias
-          distinctio quam.
+          Try to answer the following code related questions within the time
+          limit. Keep in mind that incorrect answers will penalize your score
+          time by 15 seconds!
         </h3>
         <button id="startBtn">Start Quiz</button>
       </section>
@@ -37,6 +36,16 @@
         <h2 id="title"></h2>
         <div id="choices" classes="choices"></div>
       </div>
+      <div id="end-screen" class="hide">
+        <h2>All done!</h2>
+        <p>Your final score is <span id="final-score"></span>.</p>
+        <p>
+          Enter initials: <input type="text" id="initials" max="3" />
+          <button id="submit">Submit</button>
+        </p>
+      </div>
+
+      <div id="feedback" class="feedback hide"></div>
     </div>
 
     <script src="./script.js"></script>
