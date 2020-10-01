@@ -51,6 +51,7 @@ var endScreenEl = document.getElementById("end-screen");
 var highScores = document.getElementById("scores");
 var storeInitials = document.getElementById("initials");
 var submitBtn = document.getElementById("submit");
+var timerInterval;
 
 var secondsLeft = 75;
 var questionIndex = 0;
@@ -69,12 +70,12 @@ function setTime() {
   timerEl.addEventListener("click", function () {
     setTime();
   });
-  var timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     secondsLeft--;
     timerEl.textContent = secondsLeft;
 
     if (secondsLeft === 0) {
-      clearTimeout(timerInterval);
+      clearInterval(timerInterval);
     }
   }, 1000);
 }
@@ -131,11 +132,13 @@ function validateAnswer() {
 
 //End game
 function endQuiz() {
+  clearInterval(timerInterval);
   var titleEl = document.getElementById("title");
   titleEl.textContent = "All Done!";
   choicesEl.textContent = "Your final score is " + secondsLeft;
   var endScreenEl = document.getElementById("end-screen");
   endScreenEl.classList.remove("hide");
+  console.log("Seconds Left: ", secondsLeft);
 }
 
 //Save score
