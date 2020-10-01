@@ -138,7 +138,6 @@ function endQuiz() {
   choicesEl.textContent = "Your final score is " + secondsLeft;
   var endScreenEl = document.getElementById("end-screen");
   endScreenEl.classList.remove("hide");
-  console.log("Seconds Left: ", secondsLeft);
 }
 
 //Save score
